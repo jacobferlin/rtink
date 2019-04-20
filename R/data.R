@@ -33,11 +33,11 @@ get <- function(token, path) {
   )
 }
 
-get_accounts <- function(token) {
+accounts <- function(token) {
   get(token, "/accounts/list")
 }
 
-get_transactions <- function(token) {
+transactions <- function(token) {
   get(token, "/transactions")
 }
 
