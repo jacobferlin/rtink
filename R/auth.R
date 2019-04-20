@@ -31,11 +31,13 @@ token <- function(new_token = FALSE,
     query_authorize_extra = list(market = "SE")
   )
 
-  # Assert Success
-  assertthat::assert_that(
-    httr::status_code(r) == 200,
-    msg = paste("No success, status code", httr::status_code(r))
-  )
+  # Check class
+  if (!inherits(token, "Token2.0")) {
+    stop(
+      "Could not retrieve a valid token",
+      call. = FALSE
+    )
+  }
 
   token
 }
