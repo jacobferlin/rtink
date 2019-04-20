@@ -1,5 +1,6 @@
 token <- function(new_token = FALSE,
-                  cache_file = ".httr-oauth") {
+                  cache_file = ".httr-oauth",
+                  scope = c("accounts", "transactions")) {
 
   if (!new_token) {
     return(token_cache(cache_file))
@@ -18,11 +19,14 @@ token <- function(new_token = FALSE,
     client_secret()
   )
 
+  # Build scope
+  scope <- paste0(scope, ":read", collapse = ",")
+
   # Retrive token
   token <- httr::oauth2.0_token(
     endpoint = endpoint,
     app = app,
-    scope = "accounts:read",
+    scope = scope,
     use_oob = TRUE,
     oob_value = "http://localhost:3000/callback",
     as_header = TRUE,
