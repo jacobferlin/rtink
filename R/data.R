@@ -60,3 +60,7 @@ print.tink_api <- function(x, ...) {
   str(x$content)
   invisible(x)
 }
+
+url_base <- function() {
+  "https://api.tink.se/api/v1"
+}

@@ -44,10 +44,6 @@ token <- function(scope = c("accounts", "transactions"),
   token
 }
 
-url_base <- function() {
-  "https://api.tink.se/api/v1"
-}
-
 client_id <- function() {
   id <- Sys.getenv("TINK_CLIENT_ID")
   if (identical(id, "")) {
