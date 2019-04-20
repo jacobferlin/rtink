@@ -1,4 +1,9 @@
-get_token <- function() {
+token <- function(new_token = FALSE,
+                  cache_file = token_cache_filename()) {
+
+  if (!new_token) {
+    return(token_cache(cache_file))
+  }
 
   # Build endpoint
   endpoint <- httr::oauth_endpoint(
@@ -35,12 +40,35 @@ get_token <- function() {
   token
 }
 
-get_cached_token <- function() {
-  if (!file.exists(".httr-oauth")) {
-    message("No token cache file '.httr-oauth' exists.")
-    return(NULL)
+token_cache <- function(filename) {
+  if (!token_cache_exist(filename)) {
+    stop(
+      paste0("No token cache with filename '", filename, "' exists."),
+      call. = FALSE
+    )
   }
-  readRDS(".httr-oauth")[[1]]
+  readRDS(filename)[[1]]
+}
+
+token_cache_exist <- function(filename) {
+
+  # Check file exist
+  file_exist <- file.exists(filename)
+  if (!file_exist) return(FALSE)
+
+  # If file exist, also check class
+  token <- tryCatch(
+    readRDS(filename)[[1]],
+    error = function(cond) {
+      return(FALSE)
+    }
+  )
+
+  inherits(token, "Token2.0")
+}
+
+token_cache_filename <- function() {
+  ".httr-oauth"
 }
 
 url_base <- function() {
