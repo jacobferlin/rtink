@@ -1,6 +1,15 @@
 token <- function(scope = c("accounts", "transactions"),
                   force_new = FALSE) {
 
+  # Assert scope
+  not_allowed_pos <- which(!(scope %in% allowed_scopes()))
+  assertthat::assert_that(
+    all(scope %in% allowed_scopes()),
+    msg = paste0(
+      "Not allowed scope(s): ",
+      paste0(scope[not_allowed_pos], collapse = ", "))
+  )
+
   if (force_new) {
     message("Disabling .httr-oauth by renaming to .httr-oauth-SUSPENDED")
     file.rename(".httr-oauth", ".httr-oauth-SUSPENDED")
@@ -42,6 +51,15 @@ token <- function(scope = c("accounts", "transactions"),
   }
 
   token
+}
+
+allowed_scopes <- function() {
+  c("user",
+    "credentials",
+    "accounts",
+    "transactions",
+    "investments",
+    "statistics")
 }
 
 client_id <- function() {
