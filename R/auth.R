@@ -72,7 +72,7 @@ get <- function(token, path) {
 }
 
 get_accounts <- function(token) {
-  get(token, "accounts/list")
+  get(token, "/accounts/list")
 }
 
 print.tink_api <- function(x, ...) {
@@ -83,7 +83,7 @@ print.tink_api <- function(x, ...) {
 
 
 url_base <- function() {
-  "https://api.tink.se/api/v1/"
+  "https://api.tink.se/api/v1"
 }
 
 client_id <- function() {
