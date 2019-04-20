@@ -37,6 +37,10 @@ get_accounts <- function(token) {
   get(token, "/accounts/list")
 }
 
+get_transactions <- function(token) {
+  get(token, "/transactions")
+}
+
 print.tink_api <- function(x, ...) {
   cat("<Tink ", x$path, ">\n", sep = "")
   str(x$content)
