@@ -11,9 +11,11 @@ get <- function(token, path) {
   # GET
   resp <- httr::GET(
     url = url,
-    httr::add_headers(Authorization = auth_str,
-                      Charset = "UTF-8"),
-    httr::accept_json()
+    httr::accept_json(),
+    httr::user_agent("https://github.com/jacobferlin/rtink"),
+    httr::add_headers(
+      Authorization = auth_str,
+      Charset = "UTF-8")
   )
 
   # Turn errors into R errors
