@@ -1,9 +1,9 @@
 Package: rtink
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
+Title: An R Wrapper for the Tink API
+Version: 0.0.0.9000
+Author: Jacob Ferlin
+Maintainer: Jacob Ferlin <jacob.ferlin@me.com>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 License: What license is it under?
