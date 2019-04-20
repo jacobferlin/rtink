@@ -35,6 +35,14 @@ get_token <- function() {
   token
 }
 
+get_cached_token <- function() {
+  if (!file.exists(".httr-oauth")) {
+    message("No token cache file '.httr-oauth' exists.")
+    return(NULL)
+  }
+  readRDS(".httr-oauth")[[1]]
+}
+
 url_base <- function() {
   "https://api.tink.se/api/v1"
 }
