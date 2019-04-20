@@ -7,7 +7,7 @@ get <- function(token, path) {
   token_type   <- stringr::str_to_title(token$credentials$token_type)
   access_token <- token$credentials$access_token
   auth_str     <- paste(token_type, access_token)
-browser()
+
   # GET
   resp <- httr::GET(
     url = url,
