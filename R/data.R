@@ -7,13 +7,22 @@ get <- function(token, path) {
   token_type   <- stringr::str_to_title(token$credentials$token_type)
   access_token <- token$credentials$access_token
   auth_str     <- paste(token_type, access_token)
-
+browser()
   # GET
   resp <- httr::GET(
     url = url,
-    httr::add_headers(Authorization = auth_str),
+    httr::add_headers(Authorization = auth_str,
+                      Charset = "UTF-8"),
     httr::accept_json()
   )
+
+  # Turn errors into R errors
+  if (httr::http_error(resp)) {
+    stop(
+      paste0("Tink API request failed ", httr::status_code(resp)),
+      call. = FALSE
+    )
+  }
 
   # Assert content-type is json
   if (httr::http_type(resp) != "application/json") {
@@ -21,7 +30,10 @@ get <- function(token, path) {
   }
 
   # Parse JSON
-  parsed <- jsonlite::fromJSON(httr::content(resp, "text"), simplifyVector = FALSE)
+  parsed <- jsonlite::fromJSON(
+    httr::content(resp, as = "text", encoding = "UTF-8"),
+    simplifyVector = FALSE,
+    encoding = "UTF-8")
 
   structure(
     list(
