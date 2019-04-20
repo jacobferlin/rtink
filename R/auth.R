@@ -1,9 +1,9 @@
-token <- function(new_token = FALSE,
-                  cache_file = ".httr-oauth",
-                  scope = c("accounts", "transactions")) {
+token <- function(scope = c("accounts", "transactions"),
+                  force_new = FALSE) {
 
-  if (!new_token) {
-    return(token_cache(cache_file))
+  if (force_new) {
+    message("Disabling .httr-oauth by renaming to .httr-oauth-SUSPENDED")
+    file.rename(".httr-oauth", ".httr-oauth-SUSPENDED")
   }
 
   # Build endpoint
@@ -29,9 +29,7 @@ token <- function(new_token = FALSE,
     scope = scope,
     use_oob = TRUE,
     oob_value = "http://localhost:3000/callback",
-    as_header = TRUE,
     cache = TRUE,
-    client_credentials = FALSE,
     query_authorize_extra = list(market = "SE")
   )
 
@@ -39,38 +37,6 @@ token <- function(new_token = FALSE,
   if (!inherits(token, "Token2.0")) {
     stop(
       "Could not retrieve a valid token",
-      call. = FALSE
-    )
-  }
-
-  token
-}
-
-token_cache <- function(filename) {
-
-  # Check file exist
-  if (!file.exists(filename)) {
-    stop(
-      paste0("'", filename, "' does not exists"),
-      call. = FALSE
-    )
-  }
-
-  # Check file is readable by readRDS[[1]]
-  token <- tryCatch(
-    readRDS(filename)[[1]],
-    error = function(cond) {
-      stop(
-        paste0("'", filename, "' could not be read"),
-        call. = FALSE
-      )
-    }
-  )
-
-  # Check class
-  if (!inherits(token, "Token2.0")) {
-    stop(
-      paste0("'", filename, "' does not contain a token"),
       call. = FALSE
     )
   }
