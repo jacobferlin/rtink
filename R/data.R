@@ -1,7 +1,7 @@
 get <- function(token, path) {
 
   # Build url
-  url <- paste0(url_base(), path)
+  url <- httr::modify_url(url_base(), path = path)
 
   # Build header
   token_type   <- stringr::str_to_title(token$credentials$token_type)
