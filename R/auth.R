@@ -1,5 +1,5 @@
 token <- function(new_token = FALSE,
-                  cache_file = token_cache_filename()) {
+                  cache_file = ".httr-oauth") {
 
   if (!new_token) {
     return(token_cache(cache_file))
@@ -41,34 +41,35 @@ token <- function(new_token = FALSE,
 }
 
 token_cache <- function(filename) {
-  if (!token_cache_exist(filename)) {
+
+  # Check file exist
+  if (!file.exists(filename)) {
     stop(
-      paste0("No token cache with filename '", filename, "' exists."),
+      paste0("'", filename, "' does not exists"),
       call. = FALSE
     )
   }
-  readRDS(filename)[[1]]
-}
 
-token_cache_exist <- function(filename) {
-
-  # Check file exist
-  file_exist <- file.exists(filename)
-  if (!file_exist) return(FALSE)
-
-  # If file exist, also check class
+  # Check file is readable by readRDS[[1]]
   token <- tryCatch(
     readRDS(filename)[[1]],
     error = function(cond) {
-      return(FALSE)
+      stop(
+        paste0("'", filename, "' could not be read"),
+        call. = FALSE
+      )
     }
   )
 
-  inherits(token, "Token2.0")
-}
+  # Check class
+  if (!inherits(token, "Token2.0")) {
+    stop(
+      paste0("'", filename, "' does not contain a token"),
+      call. = FALSE
+    )
+  }
 
-token_cache_filename <- function() {
-  ".httr-oauth"
+  token
 }
 
 url_base <- function() {
