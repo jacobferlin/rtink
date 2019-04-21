@@ -59,6 +59,10 @@ user <- function(token) {
   get(token, "/user")
 }
 
+investments <- function(token) {
+  get(token, "/investments")
+}
+
 print.tink_api <- function(x, ...) {
   cat("<Tink ", x$path, ">\n", sep = "")
   str(x$content)

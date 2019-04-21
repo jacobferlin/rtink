@@ -38,6 +38,20 @@ pretty_transactions <- function(parsed_content,
   pretty(l, cols = cols)
 }
 
+pretty_investments <- function(parsed_content,
+                               cols = "all") {
+  l <- parsed_content[["portfolios"]]
+  pretty(l, cols = cols)
+}
+
+pretty_instruments <- function(parsed_content,
+                               cols = "all") {
+  portfolios  <- parsed_content[["portfolios"]]
+  instruments <- purrr::map(portfolios, "instruments")
+  df_list     <- lapply(instruments, function(x) pretty(x, cols = cols))
+  dplyr::bind_cols(df_list)
+}
+
 flatten_dynamic <- function(col) {
 
   first_item <- col[[1]]
