@@ -39,7 +39,7 @@ get <- function(token, path) {
 
   structure(
     list(
-      content = parsed,
+      parsed_content = parsed,
       path = path,
       response = resp
     ),
