@@ -54,6 +54,24 @@ token <- function(scope = c("accounts", "transactions"),
   token
 }
 
+has_scope <- function(token, scope) {
+
+  # Assert scope
+  not_allowed_pos <- which(!(scope %in% allowed_scopes()))
+  assertthat::assert_that(
+    all(scope %in% allowed_scopes()),
+    msg = paste0(
+      "Not allowed scope(s): ",
+      paste0(scope[not_allowed_pos], collapse = ", "))
+  )
+
+  token_scope_str  <- token$credentials$scope
+  token_scope_list <- stringr::str_extract_all(token_scope_str, "[a-zA-Z]+(?=:read)")
+  token_scope_vec  <- token_scope_list[[1]]
+
+  scope %in% token_scope_vec
+}
+
 allowed_scopes <- function() {
   c("user",
     "credentials",
