@@ -1,5 +1,6 @@
 token <- function(scope = c("accounts", "transactions"),
-                  force_new = FALSE) {
+                  force_new = FALSE,
+                  market = "SE") {
 
   # Assert scope
   not_allowed_pos <- which(!(scope %in% allowed_scopes()))
@@ -39,7 +40,7 @@ token <- function(scope = c("accounts", "transactions"),
     use_oob = TRUE,
     oob_value = "http://localhost:3000/callback",
     cache = TRUE,
-    query_authorize_extra = list(market = "SE")
+    query_authorize_extra = list(market = market)
   )
 
   # Check class
