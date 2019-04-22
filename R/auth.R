@@ -61,7 +61,7 @@ has_scope <- function(token, scope) {
   assertthat::assert_that(
     all(scope %in% allowed_scopes()),
     msg = paste0(
-      "Not allowed scope(s): ",
+      "Scope(s) not available in API: ",
       paste0(scope[not_allowed_pos], collapse = ", "))
   )
 
