@@ -1,55 +1,51 @@
-pretty <- function(l, cols) {
+to_tibble <- function(li) {
 
-  # All cols?
-  if (length(cols) == 1 && cols == "all") cols <- names(l[[1]])
-
-  # Helper function to extract all named col from list
-  # and put into a tibble with a single column
-  create_tibble_col <- function(col_name) {
-    tibble::tibble(!!col_name := purrr::map(l, col_name))
-  }
-
-  # Extract all columns, bind them into one tibble,
-  # and flatten into correct type/class
-  df_list <- lapply(cols, function(x) create_tibble_col(x))
-  df      <- dplyr::bind_cols(df_list)
-  df      <- purrr::map(df, flatten_dynamic)
-  df      <- tibble::as_tibble(df)
+  # Turn list of lists (li) into single tibble
+  # df_list:
+  # [[1]]
+  #     accountNumber = 423904834
+  #     availableCredit = 0
+  #     ...
+  # [[2]]
+  #     accountNumber = 423904834
+  #     availableCredit = 0
+  #     ...
+  tbl <- purrr::transpose(li) %>%
+    purrr::map(flatten_dynamic) %>%
+    tibble::as_tibble()
 
   # Convert UNIX Epoch Time in milliseconds to datetime
   is_unix_epoch_ms <- function(col) is.numeric(col) && all(col > 1e+12)
   as_datetime_ms   <- function(ms) lubridate::as_datetime(ms * 1e-3)
-  df <- dplyr::mutate_if(df,
-                         is_unix_epoch_ms,
-                         dplyr::funs(as_datetime_ms))
+  tbl <- dplyr::mutate_if(tbl, is_unix_epoch_ms, as_datetime_ms)
 
-  df
+  tbl
 }
 
-pretty_accounts <- function(parsed_content,
-                            cols = c("id", "accountNumber", "name", "balance")) {
-  l <- parsed_content[["accounts"]]
-  pretty(l, cols = cols)
+accounts <- function(token) {
+  parsed <- get_accounts(token)$parsed
+  li     <- parsed[["accounts"]]
+  to_tibble(li)
 }
 
-pretty_transactions <- function(parsed_content,
-                                cols = c("id", "description", "amount", "date")) {
-  l <- parsed_content
-  pretty(l, cols = cols)
+transactions <- function(token) {
+  parsed <- get_transactions(token)$parsed
+  li     <- parsed
+  to_tibble(li)
 }
 
-pretty_investments <- function(parsed_content,
-                               cols = "all") {
-  l <- parsed_content[["portfolios"]]
-  pretty(l, cols = cols)
+investments <- function(token) {
+  parsed <- get_investments(token)$parsed
+  li     <- parsed[["portfolios"]]
+  to_tibble(li)
 }
 
-pretty_instruments <- function(parsed_content,
-                               cols = "all") {
-  portfolios  <- parsed_content[["portfolios"]]
+instruments <- function(token) {
+  parsed      <- get_investments(token)$parsed
+  portfolios  <- parsed[["portfolios"]]
   instruments <- purrr::map(portfolios, "instruments")
-  df_list     <- lapply(instruments, function(x) pretty(x, cols = cols))
-  dplyr::bind_cols(df_list)
+  tbl_list    <- lapply(instruments, to_tibble)
+  dplyr::bind_cols(tbl_list)
 }
 
 flatten_dynamic <- function(col) {
