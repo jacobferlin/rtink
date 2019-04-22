@@ -39,33 +39,48 @@ get <- function(token, path) {
 
   structure(
     list(
-      parsed_content = parsed,
       path = path,
-      response = resp
+      response = resp,
+      parsed = parsed
     ),
-    class = "tink_api"
+    class = "tink"
   )
 }
 
-accounts <- function(token) {
+get_accounts <- function(token) {
+  assertthat::assert_that(
+    has_scope(token, "accounts"),
+    msg = "Token needs scope: accounts."
+  )
   get(token, "/accounts/list")
 }
 
-transactions <- function(token) {
+get_transactions <- function(token) {
+  assertthat::assert_that(
+    has_scope(token, "transactions"),
+    msg = "Token needs scope: transactions."
+  )
   get(token, "/transactions")
 }
 
-user <- function(token) {
+get_user <- function(token) {
+  assertthat::assert_that(
+    has_scope(token, "user"),
+    msg = "Token needs scope: user."
+  )
   get(token, "/user")
 }
 
-investments <- function(token) {
+get_investments <- function(token) {
+  assertthat::assert_that(
+    has_scope(token, "investments"),
+    msg = "Token needs scope: investments."
+  )
   get(token, "/investments")
 }
 
-print.tink_api <- function(x, ...) {
-  cat("<Tink ", x$path, ">\n", sep = "")
-  str(x$content)
+print.tink <- function(x, ...) {
+  cat("<Tink: ", x$path, ">\n", sep = "")
   invisible(x)
 }
 
