@@ -2,6 +2,8 @@ token <- function(scope = c("accounts", "transactions"),
                   force_new = FALSE,
                   market = "SE") {
 
+  if (scope == "all") scope <- allowed_scopes()
+
   # Assert scope
   not_allowed_pos <- which(!(scope %in% allowed_scopes()))
   assertthat::assert_that(
