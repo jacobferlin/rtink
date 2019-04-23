@@ -22,6 +22,19 @@ to_tibble <- function(li) {
   tbl
 }
 
+user <- function(token) {
+  parsed <- get_user(token)$parsed
+  li     <- list(parsed)
+  to_tibble(li)
+}
+
+profile <- function(token) {
+  parsed  <- get_user(token)$parsed
+  profile <- parsed$profile
+  li      <- list(profile)
+  to_tibble(li)
+}
+
 accounts <- function(token) {
   parsed <- get_accounts(token)$parsed
   li     <- parsed[["accounts"]]

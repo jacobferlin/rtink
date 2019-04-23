@@ -47,6 +47,23 @@ get <- function(token, path) {
   )
 }
 
+get_user <- function(token) {
+  assertthat::assert_that(
+    has_scope(token, "user"),
+    msg = "Token needs scope: user."
+  )
+  get(token, "/user")
+}
+
+# TROR JAG INTE BEHÖVER DENNA, SER UT SOM DET TINK LINK GÖR!
+get_credentials <- function(token) {
+  assertthat::assert_that(
+    has_scope(token, "credentials"),
+    msg = "Token needs scope: credentials."
+  )
+  get(token, "/user")
+}
+
 get_accounts <- function(token) {
   assertthat::assert_that(
     has_scope(token, "accounts"),
@@ -61,14 +78,6 @@ get_transactions <- function(token) {
     msg = "Token needs scope: transactions."
   )
   get(token, "/transactions")
-}
-
-get_user <- function(token) {
-  assertthat::assert_that(
-    has_scope(token, "user"),
-    msg = "Token needs scope: user."
-  )
-  get(token, "/user")
 }
 
 get_investments <- function(token) {
