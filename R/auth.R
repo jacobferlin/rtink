@@ -14,8 +14,8 @@ token <- function(scope = c("accounts", "transactions"),
   )
 
   if (force_new) {
-    message("Disabling .rtink-oauth by renaming to .rtink-oauth-SUSPENDED")
-    file.rename(".rtink-oauth", ".rtink-oauth-SUSPENDED")
+    message("Disabling .tinkr-oauth by renaming to .tinkr-oauth-SUSPENDED")
+    file.rename(".tinkr-oauth", ".tinkr-oauth-SUSPENDED")
   }
 
   # Build endpoint
@@ -41,7 +41,7 @@ token <- function(scope = c("accounts", "transactions"),
     scope = scope,
     use_oob = TRUE,
     oob_value = "http://localhost:3000/callback",
-    cache = ".rtink-oauth",
+    cache = ".tinkr-oauth",
     query_authorize_extra = list(market = market)
   )
 

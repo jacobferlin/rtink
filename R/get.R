@@ -12,7 +12,7 @@ get <- function(token, path) {
   resp <- httr::GET(
     url = url,
     httr::accept_json(),
-    httr::user_agent("https://github.com/jacobferlin/rtink"),
+    httr::user_agent("https://github.com/jacobferlin/tinkr"),
     httr::add_headers(
       Authorization = auth_str,
       Charset = "UTF-8")
