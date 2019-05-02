@@ -1,4 +1,4 @@
-# rtink
+# tinkr
 
 ## Introduction
 

@@ -1,4 +1,4 @@
-Package: rtink
+Package: tinkr
 Type: Package
 Title: An R Wrapper for the Tink API
 Version: 0.0.0.9000
