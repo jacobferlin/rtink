@@ -1,3 +1,21 @@
+#' Create Authentication Token
+#'
+#' @param scope A character vector. Possible scopes are \code{"user", "credentials",
+#'   "accounts", "transactions", "investments", "statistics"}. Multiple scopes
+#'   can be used in same token.
+#' @param force_new Logical. Should a new token be requested even though cache
+#'   exist? If there has been a while since token cache was created, then this
+#'   probably needs to be \code{TRUE}.
+#' @param market A character string. Market (country) in which bank is accessed.
+#'
+#' @return An httr::oauth2.0_token object.
+#'
+#' @examples
+#' token("accounts")
+#' token(c("accounts", "transactions"))
+#' token("accounts", force_new = TRUE)
+#'
+#' @export
 token <- function(scope = c("accounts", "transactions"),
                   force_new = FALSE,
                   market = "SE") {

@@ -18,4 +18,4 @@ Imports:
     purrr,
     stringr,
     tibble
-    
+RoxygenNote: 6.1.1
