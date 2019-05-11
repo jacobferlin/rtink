@@ -35,18 +35,21 @@ profile <- function(token) {
   to_tibble(li)
 }
 
+#' @export
 accounts <- function(token) {
   parsed <- get_accounts(token)$parsed
   li     <- parsed[["accounts"]]
   to_tibble(li)
 }
 
+#' @export
 transactions <- function(token) {
   parsed <- get_transactions(token)$parsed
   li     <- parsed
   to_tibble(li)
 }
 
+#' @export
 investments <- function(token) {
   parsed <- get_investments(token)$parsed
   li     <- parsed[["portfolios"]]
