@@ -18,7 +18,7 @@ you R environment.
 
 ``` r
 # Package usethis from CRAN makes it easy to set environment variables
-install.packages("usethis")
+# install.packages("usethis")
 usethis::edit_r_environ()
 ```
 
@@ -32,7 +32,7 @@ devtools::install_github("jacobferlin/tinkr")
 
 ## Usage
 
-Create a `token` to authenticate yourself. A web page opens in whick you
+Create a `token` to authenticate yourself. A web page opens for you
 login to your bank. The scope argument sets what is downloaded to your
 app on Tink. The same page then redirects to an empty page, but the url
 contains a code which needs to be copied to the R console.
