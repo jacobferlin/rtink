@@ -2,5 +2,5 @@
 .Rhistory
 .RData
 .Ruserdata
-.rtink-oauth
-.rtink-oauth-SUSPENDED
+.tinkr-oauth
+.tinkr-oauth-SUSPENDED
