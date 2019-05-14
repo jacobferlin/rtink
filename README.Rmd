@@ -42,7 +42,7 @@ devtools::install_github("jacobferlin/tinkr")
 
 ## Usage
 
-Create a `token` to authenticate yourself. A web page opens for you login to your bank. The scope argument sets what is downloaded to your app on Tink. The same page then redirects to an empty page, but the url contains a code which needs to be copied to the R console.
+Create a `token` to authenticate yourself. A web page opens for you login to your bank. The scope argument sets what is downloaded to your app on Tink. The same page then redirects to an empty page, but the url contains a code which needs to be copied to the R console. [Supported markets](https://docs.tink.com/resources/market-coverage).
 
 ```{r, eval = FALSE}
 library(tinkr)
