@@ -5,7 +5,8 @@
 
 ## Overview
 
-**tinkr** is an R wrapper for the Tink REST API.
+**tinkr** is an R wrapper for the Tink REST API. Only functions for
+reading data are implemented at this stage.
 
 Tink is a platform for open banking. Read more at their website
 [Tink](https://docs.tink.com/).
