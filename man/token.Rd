@@ -5,18 +5,22 @@
 \title{Create Authentication Token}
 \usage{
 token(scope = c("accounts", "transactions"), force_new = FALSE,
-  market = "SE")
+  market = "SE", provider = NULL, username = NULL)
 }
 \arguments{
-\item{scope}{A character vector. Possible scopes are \code{"user", "credentials",
-"accounts", "transactions", "investments", "statistics"}. Multiple scopes
-can be used in same token.}
+\item{scope}{Required character vector. Possible scopes are \code{"accounts",
+"transactions", "investments", "instruments"}. Multiple scopes can be used
+in same token.}
 
-\item{force_new}{Logical. Should a new token be requested even though cache
-exist? If there has been a while since token cache was created, then this
-probably needs to be \code{TRUE}.}
+\item{force_new}{Required logical. Should new token be requested even though
+cache exist? If there has been a while since token cache was created, then
+this probably needs to be \code{TRUE}.}
 
-\item{market}{A character string. Market (country) in which bank is accessed.}
+\item{market}{Required string. Market (country) in which bank is accessed.}
+
+\item{provider}{Optional string. Unique name of provider (eg.
+\code{sbab-bankid}). If this is provided, the provider will be chosen for
+the user. If not, the user can select a provider in a list.}
 }
 \value{
 An httr::oauth2.0_token object.

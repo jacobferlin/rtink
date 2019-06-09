@@ -1,12 +1,17 @@
 #' Create Authentication Token
 #'
-#' @param scope A character vector. Possible scopes are \code{"user", "credentials",
-#'   "accounts", "transactions", "investments", "statistics"}. Multiple scopes
-#'   can be used in same token.
-#' @param force_new Logical. Should a new token be requested even though cache
-#'   exist? If there has been a while since token cache was created, then this
-#'   probably needs to be \code{TRUE}.
-#' @param market A character string. Market (country) in which bank is accessed.
+#' @param scope Required character vector. Possible scopes are \code{"accounts",
+#'   "transactions", "investments", "instruments"}. Multiple scopes can be used
+#'   in same token.
+#' @param force_new Required logical. Should new token be requested even though
+#'   cache exist? If there has been a while since token cache was created, then
+#'   this probably needs to be \code{TRUE}.
+#' @param market Required string. Market (country) in which bank is accessed.
+#' @param provider Optional string. Unique name of provider (eg.
+#'   \code{sbab-bankid}). If this is provided, the provider will be chosen for
+#'   the user. If not, the user can select a provider in a list.
+#' @username Optional string. If this is provided, the username field will be
+#'   pre-filled. If not, the user can type it in.
 #'
 #' @return An httr::oauth2.0_token object.
 #'
@@ -18,7 +23,9 @@
 #' @export
 token <- function(scope = c("accounts", "transactions"),
                   force_new = FALSE,
-                  market = "SE") {
+                  market = "SE",
+                  provider = NULL,
+                  username = NULL) {
 
   if (length(scope) == 1 && scope == "all") scope <- allowed_scopes()
 
@@ -52,6 +59,12 @@ token <- function(scope = c("accounts", "transactions"),
   # Build scope
   scope <- paste0(scope, ":read", collapse = ",")
 
+  # Build extras
+  extras <- list()
+  if (!is.null(market))   extras %<>% append(list(market         = market))
+  if (!is.null(provider)) extras %<>% append(list(input_provider = provider))
+  if (!is.null(username)) extras %<>% append(list(input_username = username))
+
   # Retrive token
   token <- httr::oauth2.0_token(
     endpoint = endpoint,
@@ -60,7 +73,7 @@ token <- function(scope = c("accounts", "transactions"),
     use_oob = TRUE,
     oob_value = "http://localhost:3000/callback",
     cache = ".tinkr-oauth",
-    query_authorize_extra = list(market = market)
+    query_authorize_extra = extras
   )
 
   # Check class
@@ -74,6 +87,9 @@ token <- function(scope = c("accounts", "transactions"),
   token
 }
 
+#' Does Token have Scope
+#'
+#' Checks if token includes a particular scope or not.
 has_scope <- function(token, scope) {
 
   # Assert scope
@@ -93,12 +109,10 @@ has_scope <- function(token, scope) {
 }
 
 allowed_scopes <- function() {
-  c("user",
-    "credentials",
-    "accounts",
+  c("accounts",
     "transactions",
     "investments",
-    "statistics")
+    "instruments")
 }
 
 client_id <- function() {
