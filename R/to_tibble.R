@@ -59,12 +59,12 @@ investments <- function(token) {
 #'
 #' Retrieve instruments from authenticated login used in token.
 #'
-#' @param token Required. Created by \code{token("instruments")}.
+#' @param token Required. Created by \code{token("investments")}.
 #'
 #' @return A tbl.
 #'
 #' @examples
-#' tok <- token("instruments")
+#' tok <- token("investments")
 #' tbl <- instruments(tok)
 #'
 #' @export

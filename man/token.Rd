@@ -9,7 +9,7 @@ token(scope = c("accounts", "transactions"), force_new = FALSE,
 }
 \arguments{
 \item{scope}{Required character vector. Possible scopes are \code{"accounts",
-"transactions", "investments", "instruments"}. Multiple scopes can be used
+"transactions", "investments"}. Multiple scopes can be used
 in same token.}
 
 \item{force_new}{Required logical. Should new token be requested even though
@@ -21,6 +21,9 @@ this probably needs to be \code{TRUE}.}
 \item{provider}{Optional string. Unique name of provider (eg.
 \code{sbab-bankid}). If this is provided, the provider will be chosen for
 the user. If not, the user can select a provider in a list.}
+
+\item{username}{Optional string. If this is provided, the username field will be
+pre-filled. If not, the user can type it in.}
 }
 \value{
 An httr::oauth2.0_token object.

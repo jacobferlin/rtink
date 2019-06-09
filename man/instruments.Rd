@@ -7,7 +7,7 @@
 instruments(token)
 }
 \arguments{
-\item{token}{Required. Created by \code{token("instruments")}.}
+\item{token}{Required. Created by \code{token("investments")}.}
 }
 \value{
 A tbl.
@@ -16,7 +16,7 @@ A tbl.
 Retrieve instruments from authenticated login used in token.
 }
 \examples{
-tok <- token("instruments")
+tok <- token("investments")
 tbl <- instruments(tok)
 
 }

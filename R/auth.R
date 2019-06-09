@@ -1,7 +1,7 @@
 #' Create Authentication Token
 #'
 #' @param scope Required character vector. Possible scopes are \code{"accounts",
-#'   "transactions", "investments", "instruments"}. Multiple scopes can be used
+#'   "transactions", "investments"}. Multiple scopes can be used
 #'   in same token.
 #' @param force_new Required logical. Should new token be requested even though
 #'   cache exist? If there has been a while since token cache was created, then
@@ -10,7 +10,7 @@
 #' @param provider Optional string. Unique name of provider (eg.
 #'   \code{sbab-bankid}). If this is provided, the provider will be chosen for
 #'   the user. If not, the user can select a provider in a list.
-#' @username Optional string. If this is provided, the username field will be
+#' @param username Optional string. If this is provided, the username field will be
 #'   pre-filled. If not, the user can type it in.
 #'
 #' @return An httr::oauth2.0_token object.
@@ -114,8 +114,7 @@ has_scope <- function(token, scope) {
 allowed_scopes <- function() {
   c("accounts",
     "transactions",
-    "investments",
-    "instruments")
+    "investments")
 }
 
 #' Client ID
