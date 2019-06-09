@@ -1,3 +1,6 @@
+#' General GET function
+#'
+#' A general function to GET all sorts of paths.
 get <- function(token, path) {
 
   # Build url
@@ -47,23 +50,7 @@ get <- function(token, path) {
   )
 }
 
-get_user <- function(token) {
-  assertthat::assert_that(
-    has_scope(token, "user"),
-    msg = "Token needs scope: user."
-  )
-  get(token, "/user")
-}
-
-# TROR JAG INTE BEHÖVER DENNA, SER UT SOM DET TINK LINK GÖR!
-get_credentials <- function(token) {
-  assertthat::assert_that(
-    has_scope(token, "credentials"),
-    msg = "Token needs scope: credentials."
-  )
-  get(token, "/user")
-}
-
+#' GET Accounts
 get_accounts <- function(token) {
   assertthat::assert_that(
     has_scope(token, "accounts"),
@@ -72,6 +59,7 @@ get_accounts <- function(token) {
   get(token, "/accounts/list")
 }
 
+#' GET Transactions
 get_transactions <- function(token) {
   assertthat::assert_that(
     has_scope(token, "transactions"),
@@ -80,6 +68,7 @@ get_transactions <- function(token) {
   get(token, "/transactions")
 }
 
+#' GET Investments
 get_investments <- function(token) {
   assertthat::assert_that(
     has_scope(token, "investments"),
@@ -88,11 +77,15 @@ get_investments <- function(token) {
   get(token, "/investments")
 }
 
+#' Custom Print
 print.tink <- function(x, ...) {
   cat("<Tink: ", x$path, ">\n", sep = "")
   invisible(x)
 }
 
+#' Base URL
+#'
+#' Base URL to TINK API.
 url_base <- function() {
   "https://api.tink.se/api/v1"
 }

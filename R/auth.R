@@ -87,7 +87,7 @@ token <- function(scope = c("accounts", "transactions"),
   token
 }
 
-#' Does Token have Scope
+#' Does Token have Scope?
 #'
 #' Checks if token includes a particular scope or not.
 has_scope <- function(token, scope) {
@@ -108,6 +108,9 @@ has_scope <- function(token, scope) {
   scope %in% token_scope_vec
 }
 
+#' Allowed Scopes
+#'
+#' Specifies what scopes are implemented in this package.
 allowed_scopes <- function() {
   c("accounts",
     "transactions",
@@ -115,6 +118,9 @@ allowed_scopes <- function() {
     "instruments")
 }
 
+#' Client ID
+#'
+#' Returns client ID from environment.
 client_id <- function() {
   id <- Sys.getenv("TINK_CLIENT_ID")
   if (identical(id, "")) {
@@ -125,6 +131,9 @@ client_id <- function() {
   id
 }
 
+#' Client Secret
+#'
+#' Returns client secret from environment.
 client_secret <- function() {
   secret <- Sys.getenv("TINK_CLIENT_SECRET")
   if (identical(secret, "")) {

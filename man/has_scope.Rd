@@ -2,7 +2,7 @@
 % Please edit documentation in R/auth.R
 \name{has_scope}
 \alias{has_scope}
-\title{Does Token have Scope}
+\title{Does Token have Scope?}
 \usage{
 has_scope(token, scope)
 }

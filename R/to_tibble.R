@@ -76,6 +76,9 @@ instruments <- function(token) {
   dplyr::bind_cols(tbl_list)
 }
 
+#' Turn List to Table
+#'
+#' Turn a one level nested list into tbl and convert datetime.
 to_tibble <- function(li) {
 
   # Turn list of lists (li) into single tibble
@@ -91,6 +94,9 @@ to_tibble <- function(li) {
   tbl
 }
 
+#' Flatten List
+#'
+#' Flatten list to type of first item
 flatten_dynamic <- function(col) {
 
   first_item <- col[[1]]
