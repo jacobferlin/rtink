@@ -45,7 +45,7 @@ token <- function(scope = c("accounts", "transactions"),
 
   # Build endpoint
   endpoint <- httr::oauth_endpoint(
-    authorize = "https://oauth.tink.com/0.4/authorize/",
+    authorize = "https://link.tink.com/1.0/authorize/",
     access    = "https://api.tink.se/api/v1/oauth/token"
   )
 
