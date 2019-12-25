@@ -1,23 +1,50 @@
+#' GET Accounts
+get_accounts <- function(token) {
+  assertthat::assert_that(
+    has_scope(token, "accounts"),
+    msg = "Token needs scope: accounts."
+  )
+  get(token, "/accounts/list")
+}
+
+#' GET Transactions
+get_transactions <- function(token) {
+  assertthat::assert_that(
+    has_scope(token, "transactions"),
+    msg = "Token needs scope: transactions."
+  )
+  get(token, "/transactions")
+}
+
+#' GET Investments
+get_investments <- function(token) {
+  assertthat::assert_that(
+    has_scope(token, "investments"),
+    msg = "Token needs scope: investments."
+  )
+  get(token, "/investments")
+}
+
 #' General GET function
 #'
 #' A general function to GET all sorts of paths.
 get <- function(token, path) {
 
-  # Build url
-  url <- paste0(url_base(), path)
-
-  # Build header
-  token_type   <- stringr::str_to_title(token$credentials$token_type)
-  access_token <- token$credentials$access_token
-  auth_str     <- paste(token_type, access_token)
-
-  # GET
-  resp <- httr::GET(
-    url = url,
+  get_config <- list(
     httr::accept_json(),
     httr::user_agent("https://github.com/jacobferlin/tinkr"),
     httr::add_headers(
-      Authorization = auth_str,
+      Authorization = auth_str(token),
+      Charset = "UTF-8")
+  )
+
+  # GET
+  resp <- httr::GET(
+    url = paste0(url_base(), path),
+    httr::accept_json(),
+    httr::user_agent("https://github.com/jacobferlin/tinkr"),
+    httr::add_headers(
+      Authorization = auth_str(token),
       Charset = "UTF-8")
   )
 
@@ -50,31 +77,20 @@ get <- function(token, path) {
   )
 }
 
-#' GET Accounts
-get_accounts <- function(token) {
-  assertthat::assert_that(
-    has_scope(token, "accounts"),
-    msg = "Token needs scope: accounts."
-  )
-  get(token, "/accounts/list")
+#' Base URL
+#'
+#' Base URL to TINK API.
+url_base <- function() {
+  "https://api.tink.se/api/v1"
 }
 
-#' GET Transactions
-get_transactions <- function(token) {
-  assertthat::assert_that(
-    has_scope(token, "transactions"),
-    msg = "Token needs scope: transactions."
-  )
-  get(token, "/transactions")
-}
-
-#' GET Investments
-get_investments <- function(token) {
-  assertthat::assert_that(
-    has_scope(token, "investments"),
-    msg = "Token needs scope: investments."
-  )
-  get(token, "/investments")
+#' Authentication String
+#'
+#' Authentication string for GET header.
+auth_str <- function(token) {
+  token_type   <- stringr::str_to_title(token$credentials$token_type)
+  access_token <- token$credentials$access_token
+  paste(token_type, access_token)
 }
 
 #' Custom Print
@@ -83,9 +99,4 @@ print.tink <- function(x, ...) {
   invisible(x)
 }
 
-#' Base URL
-#'
-#' Base URL to TINK API.
-url_base <- function() {
-  "https://api.tink.se/api/v1"
-}
+
