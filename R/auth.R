@@ -25,7 +25,8 @@ token <- function(scope = c("accounts", "transactions"),
                   force_new = FALSE,
                   market = "SE",
                   provider = NULL,
-                  username = NULL) {
+                  username = NULL,
+                  test = NULL) {
 
   if (length(scope) == 1 && scope == "all") scope <- allowed_scopes()
 
@@ -64,6 +65,8 @@ token <- function(scope = c("accounts", "transactions"),
   if (!is.null(market))   extras %<>% append(list(market         = market))
   if (!is.null(provider)) extras %<>% append(list(input_provider = provider))
   if (!is.null(username)) extras %<>% append(list(input_username = username))
+  # If use tink test providers
+  if (!is.null(test))     extras %<>% append(list(test = "true"))
 
   # Retrive token
   token <- httr::oauth2.0_token(
