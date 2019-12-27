@@ -81,7 +81,7 @@ get <- function(token, path) {
 #'
 #' Base URL to TINK API.
 url_base <- function() {
-  "https://api.tink.se/api/v1"
+  "https://api.tink.com/api/v1"
 }
 
 #' Authentication String
